@@ -5,7 +5,21 @@
     <title>Book Review</title>
   </head>
   <body>
-    <h1>User</h1>
+    <h1>User {{user.id}}</h1>
+    <h3>Alias:</h3>
+    <p>{{user.alias}}</p>
+    <h3>Name:</h3>
+    <p>{{user.name}}</p>
+    <h3>Email:</h3>
+    <p>{{user.email}}</p>
+    <h3>Total reviews:</h3>
+    <p>???</p>
+
+    <h4>Posted Reviews on the following books:</h4>
+
+    <a href="{% url 'index' %}">Home</a>
+    <a href="{% url 'add' %}">Add Book and Review</a>
+    <a href="{% url 'logout' %}">Logout</a>
 
   </body>
 </html>
