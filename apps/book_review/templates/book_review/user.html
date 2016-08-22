@@ -13,9 +13,7 @@
     <p>{{user.email}}</p>
     <h3>Total reviews:</h3>
     <p>{{total}}</p>
-
     <h4>Posted Reviews on the following books:</h4>
-
     <ul>
       {% for review in reviews %}
         {% if review.book_id.title != '' %}
@@ -23,12 +21,9 @@
         {% endif %}
       {% endfor %}
     </ul>
-
-
     <a href="{% url 'index' %}">Home</a>
     <a href="{% url 'books' %}">Books</a>
     <a href="{% url 'add' %}">Add Book and Review</a>
     <a href="{% url 'logout' %}">Logout</a>
-
   </body>
 </html>

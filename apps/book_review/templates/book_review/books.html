@@ -9,27 +9,20 @@
     <h2>Recent Book reviews:</h2>
     <h4>******************************</h4>
     {% for book in recent %}
-      <h3><a href="{% url 'specific' book_id=book.id%}">{{book.book_id.title}}</a></h3>
+      <h3><a href="{% url 'specific' book_id=book.book_id.id%}">{{book.book_id.title}}</a></h3>
       <p>Rating: {{book.rating}}</p>
       <p><a href="{% url 'user' user_id=book.user_id.id%}">{{book.user_id.alias}}</a> says: {{book.review}}</p>
       <p>Posted on {{book.created_at}}</p>
-
       <h4>******************************</h4>
     {% endfor %}
-
     <h2>Other Books with reviews:</h2>
     {% for book in books %}
       <a href="{% url 'specific' book_id=book.id%}">{{book.title}}</a>
     {% endfor %}
-
     <br><br><br>
     <a href="{% url 'index' %}">Home</a>
     <a href="{% url 'user' user_id=request.session.user %}">My Page</a>
     <a href="{% url 'add' %}">Add Book and Review</a>
     <a href="{% url 'logout' %}">Logout</a>
-
-
-
-
   </body>
 </html>

@@ -29,9 +29,7 @@ def user(request, user_id):
 def books(request):
     books = Book.objects.all()
     recent = Review.objects.all().order_by('-created_at')[:3]
-
     context = {'books':books, 'recent':recent}
-
     return render(request, 'book_review/books.html', context)
 
 def specific(request, book_id):
@@ -39,8 +37,6 @@ def specific(request, book_id):
     reviews = Review.objects.filter(book_id=book_id)
     context = {'book':book, 'reviews': reviews}
     return render(request, 'book_review/specific.html', context)
-
-
 
 def register_process(request):
     result = User.manager.validateReg(request)
@@ -85,13 +81,13 @@ def add_book(request):
             if request.POST['author1'] == 'select':
                 errors.append('Author can not be empty')
             author = request.POST['author1']
-        author = request.POST['author2']
+        else:
+            author = request.POST['author2']
         if len(request.POST['review']) < 1:
             errors.append('Review can not be empty')
         if len(errors) > 0:
             print_messages(request, errors)
             return redirect(reverse('add'))
-
         book = Book.objects.create(title = request.POST['title'], author = author, user_id = user)
         review = Review.objects.create(review = request.POST['review'], rating = request.POST['rating'], user_id = user, book_id = book)
         return redirect(reverse('specific', kwargs={'book_id':book.id}))
@@ -103,7 +99,6 @@ def add_review(request, book_id):
         user = User.objects.get(id=request.session['user'])
         book = Book.objects.get(id=book_id)
         review = Review.objects.create(review = request.POST['review'], rating = request.POST['rating'], user_id = user, book_id = book)
-
         return redirect(reverse('specific', kwargs={'book_id':book_id}))
     else:
 	    return redirect(reverse('index'))

@@ -9,20 +9,20 @@
     {% if messages %}
      <div class="errors">
          {% for message in messages %}
-         <h4{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h4>
+            <h4{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h4>
          {% endfor %}
      </div>
     {% endif %}
     <form action="{% url 'add_book' %}" method='post'>
       {% csrf_token %}
-      <h3>Title:</h3>
+      <h3>Book Title:</h3>
       <input type="text" name="title">
       <h3>Author:</h3>
       <p> Choose from the list: </p>
       <select name="author1">
         <option value="select" selected="selected">Select</option>
         {% for book in books %}
-          <option value="{{book.author}}" >{{book.author}}</option>
+          <option value={{book.author}} >{{book.author}}</option>
         {% endfor %}
       </select>
       <p> Or add a new author: </p>
@@ -38,16 +38,12 @@
         <option value="4">4</option>
         <option value="5">5</option>
 			</select>
-
       <input type="submit" value="Add Book and Review">
     </form>
     <br>
-
     <a href="{% url 'index' %}">Home</a>
     <a href="{% url 'user' user_id=request.session.user%}">My Page</a>
     <a href="{% url 'books' %}">Books</a>
     <a href="{% url 'logout' %}">Logout</a>
-
-
   </body>
 </html>

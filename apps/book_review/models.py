@@ -13,24 +13,20 @@ class UserManager(models.Manager):
             errors.append('Name can not be less than 2 characters')
         elif not request.POST['name'].isalpha() and request.POST['name'].isspace():
             errors.append('Name should only contain letters')
-
         if len(request.POST['email']) < 1:
             errors.append('Email can not be empty')
         elif not EMAIL_REGEX.match(request.POST['email']):
             errors.append('Email is not valid')
-
         try:
             user = User.objects.get(email = request.POST['email'])
             errors.append('This email is already being used')
         except ObjectDoesNotExist:
             pass
-
         try:
             user = User.objects.get(alias = request.POST['alias'])
             errors.append('This alias is already being used')
         except ObjectDoesNotExist:
             pass
-
         if len(errors) > 0:
             return (False, errors)
         return (True, "none")
@@ -45,7 +41,6 @@ class UserManager(models.Manager):
             errors.append('Password should contain at least one apper case letter and one number')
         if request.POST['password'] != request.POST['repeat']:
             errors.append('Password repeat did not match the password')
-
         if len(errors) > 0:
             return (False, errors)
         return (True, "none")
@@ -69,7 +64,6 @@ class UserManager(models.Manager):
         errors.append("Sorry, no email found. Please try again.")
         return (False, errors)
 
-
 class User(models.Model):
       name = models.CharField(max_length=255)
       alias = models.CharField(max_length=45)
@@ -77,7 +71,6 @@ class User(models.Model):
       pw_hash = models.CharField(max_length=255)
       created_at = models.DateTimeField(auto_now_add = True)
       updated_at = models.DateTimeField(auto_now = True)
-
       objects = models.Manager()
       manager = UserManager()
 
