@@ -69,8 +69,6 @@ class UserManager(models.Manager):
         errors.append("Sorry, no email found. Please try again.")
         return (False, errors)
 
-    def delete(self, user_id):
-        self.filter(id = user_id).delete()
 
 class User(models.Model):
       name = models.CharField(max_length=255)

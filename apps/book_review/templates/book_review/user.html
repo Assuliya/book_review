@@ -5,19 +5,28 @@
     <title>Book Review</title>
   </head>
   <body>
-    <h1>User {{user.id}}</h1>
-    <h3>Alias:</h3>
+    <h3>User Alias:</h3>
     <p>{{user.alias}}</p>
     <h3>Name:</h3>
     <p>{{user.name}}</p>
     <h3>Email:</h3>
     <p>{{user.email}}</p>
     <h3>Total reviews:</h3>
-    <p>???</p>
+    <p>{{total}}</p>
 
     <h4>Posted Reviews on the following books:</h4>
 
+    <ul>
+      {% for review in reviews %}
+        {% if review.book_id.title != '' %}
+        <li><a href="{% url 'specific' book_id=review.book_id.id%}">{{review.book_id.title}}</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+
     <a href="{% url 'index' %}">Home</a>
+    <a href="{% url 'books' %}">Books</a>
     <a href="{% url 'add' %}">Add Book and Review</a>
     <a href="{% url 'logout' %}">Logout</a>
 

@@ -5,7 +5,49 @@
     <title>Book Review</title>
   </head>
   <body>
-    <h1>Specific Book</h1>
+
+    <h2>{{book.title}}</h2>
+    <p>Author: {{book.author}}</p>
+    <br><br>
+    <h3>Reviews:</h3>
+    <h4>******************************</h4>
+
+    {% for review in reviews %}
+      <h4>Rating:</h4>
+      <p>{{review.rating}}</p>
+      <p><a href="{% url 'user' user_id=review.user_id.id%}">{{review.user_id.alias}}</a> says: {{review.review}}</p>
+      <p>Posted on {{review.created_at}}</p>
+      {% if review.user_id.id == request.session.user%}
+        <a href="{% url 'delete_review' review_id=review.id %}">Delete</a>
+      {%endif%}
+
+      <h4>******************************</h4>
+    {% endfor %}
+
+
+    <h3>Add a review:</h3>
+    <form action="{% url 'add_review' book_id=book.id%}" method='post'>
+      {% csrf_token %}
+      Review: <input type="text" name="review">
+      Rating:
+      <select name="rating">
+			  <option value="0" selected="selected">0</option>
+				<option value="1">1</option>
+        <option value="2">2</option>
+				<option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+			</select>
+
+    <input type="submit" value="Add Book and Review">
+    </form>
+    <br>
+    <a href="{% url 'index' %}">Home</a>
+    <a href="{% url 'user' user_id=request.session.user %}">My Page</a>
+    <a href="{% url 'books' %}">Books</a>
+    <a href="{% url 'logout' %}">Logout</a>
+
+
 
   </body>
 </html>
