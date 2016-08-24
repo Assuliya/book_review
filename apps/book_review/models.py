@@ -11,7 +11,7 @@ class UserManager(models.Manager):
         errors = []
         if len(request.POST['name']) < 2:
             errors.append('Name can not be less than 2 characters')
-        elif not request.POST['name'].isalpha() and request.POST['name'].isspace():
+        elif not all(x.isalpha() or x.isspace() for x in request.POST['name']):
             errors.append('Name should only contain letters')
         if len(request.POST['email']) < 1:
             errors.append('Email can not be empty')
@@ -29,7 +29,7 @@ class UserManager(models.Manager):
             pass
         if len(errors) > 0:
             return (False, errors)
-        return (True, "none")
+        return (True, errors)
 
     def validateRegPass(self, request):
         errors = []
@@ -43,7 +43,7 @@ class UserManager(models.Manager):
             errors.append('Password repeat did not match the password')
         if len(errors) > 0:
             return (False, errors)
-        return (True, "none")
+        return (True, errors)
 
     def validateLogin(self, request):
         from bcrypt import hashpw, gensalt
